@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404, JsonResponse
 
 from .models import Tweet
 
-# Create your views here.
+import random
 
 def home(request, *args, **kwargs):
     context = {}
@@ -13,7 +13,12 @@ def home(request, *args, **kwargs):
 
 def tweet_lits(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    data = [{"id": x.id, "content": x.content} for x in qs]
+    tweets_list = [{"id": x.id, "content": x.content, "likes": random.randint(0, 69)} for x in qs]
+    data = {
+        "isUser": False,
+        "response": tweets_list
+    }
+    return JsonResponse(data)
 
 def tweet_detail(request, tweet_id, *args, **kwargs):
     data = {
