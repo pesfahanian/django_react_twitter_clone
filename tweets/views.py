@@ -11,6 +11,10 @@ def home(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
     # return HttpResponse('<h1>Fuck You!</h1>')
 
+def tweet_lits(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    data = [{"id": x.id, "content": x.content} for x in qs]
+
 def tweet_detail(request, tweet_id, *args, **kwargs):
     data = {
         "id": tweet_id,
